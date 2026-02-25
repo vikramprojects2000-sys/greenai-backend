@@ -75,7 +75,7 @@ EMAIL_ADDRESS = os.environ.get('EMAIL_ADDRESS')
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
 SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = 587
+SMTP_PORT = 465
 
 
 def generate_otp():
@@ -88,23 +88,15 @@ def send_email(to_email, otp):
 
 Hi there,
 
-Thank you for choosing to verify your account with us. Below is your one-time password (OTP) to complete the verification process:
-
 Your OTP code: {otp}
 
-This code is valid for the next 10 minutes, so please enter it soon to complete your registration.
-
-If you didn't request this OTP or need any assistance, feel free to contact us at tmsaipavan@gmail.com.
-
-Thank you for your trust, and welcome to GREENAI!
+This code is valid for the next 10 minutes.
 
 Best regards,
 GREENAI Team
-tmsaipavan@gmail.com | 9962355558
 """
     try:
-        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-        server.starttls()
+        server = smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT)
         server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
         server.sendmail(EMAIL_ADDRESS, to_email, email_body)
         server.quit()
